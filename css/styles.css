@@ -1,50 +1,109 @@
-/* ---------------------------------------------------------
-   Import af font
---------------------------------------------------------- */
-@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
-/* ---------------------------------------------------------
-   Root-variabler
-   - px: billedstørrelser, offsets
-   - farver + font
---------------------------------------------------------- */
-:root {
-  --font-body: "Poppins", sans-serif;
-
-  /* Billede størrelser (px) */
-  --sun-size: 100px;
-  --car-w: 200px;
-
-  /* Start /exit offset (px) */
-  --off-car1: 200px;
-  --off-car2: 200px;
-  --off-car3: 200px;
-}
-
-/* ---------------------------------------------------------
-   Global reset
---------------------------------------------------------- */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: var(--font-body);
+}
+body {
+  font-family: "Poppins", sans-serif;
 }
 
-/* ---------------------------------------------------------
-   Baggrund (parallax)
-   - Brug vw i animationen: 0 → -100vw
-   - Sæt background-size til 100vw for at matche bevægelse
---------------------------------------------------------- */
-.background {
+/* Sektionen fylder hele vinduet */
+.havfrue-skærm {
+  display: grid;
+  place-items: center;
+  height: 100vh;
+  background: #02131e; /* “vandfarve” rundt om billedet */
+  overflow: hidden;
+}
+
+/* Scene med samme proportioner som baggrundsbilledet */
+.scene {
+  position: relative;
+  aspect-ratio: 16 / 9; /* justér efter dit billede */
+  height: 100%;
+  max-width: 100%;
+  background-image: url("../havfrue-img/baggrund-kiste.png");
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* Havfruen i nederste venstre hjørne af billedet */
+.mermaid {
   position: absolute;
-  inset: auto 0 0 0; /* inset egenskaben undersøger den studerende  */
+  bottom: 0;
+  left: 0;
+  width: clamp(120px, 15vw, 230px);
+  z-index: 5;
+}
+.mermaid img {
+  position: absolute;
+  bottom: 0;
+  left: 0;
   width: 100%;
-  height: 280px;
-  background: url(../img/bg.png);
-  background-size: 100vw auto;
-  background-repeat: repeat-x; /* Den studerende undersøger egenskaber - background-repeat */
-  animation: animateBg 17s linear infinite;
+  height: auto;
+}
+
+@keyframes speak {
+  0%,
+  40%,
+  100% {
+    opacity: 1;
+  }
+  50%,
+  60% {
+    opacity: 0;
+  }
+}
+
+/* Fisk ovenpå billedet */
+.fish {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  pointer-events: none;
+}
+.fish img {
+  position: absolute;
+  width: clamp(60px, 8vw, 140px);
+  height: auto;
+}
+
+/* Eksempelplaceringer — justér frit */
+.starfisk {
+  left: 12%;
+  bottom: 14%;
+  width: 70px;
+}
+.nemo {
+  left: 42%;
+  top: 50%;
+}
+.dory {
+  right: 20%;
+  bottom: 25%;
+}
+.ondfisk {
+  right: 5%;
+  top: 38%;
+}
+.gulfisk {
+  right: 15%;
+  top: 12%;
+}
+.stribefisk {
+  left: 5%;
+  bottom: 28%;
+}
+.kuglefiskstor {
+  left: 12%;
+  top: 8%;
+}
+.kuglefisklille {
+  right: 30%;
+  top: 15%;
 }
 
 /* ---------------------------------------------------------
