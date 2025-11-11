@@ -72,6 +72,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+
+
 // Hent DOM Elementer
 
 const getRedCar = document.getElementById("redCar");
