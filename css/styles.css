@@ -114,9 +114,9 @@
 --------------------------------------------------------- */
 .havfrue {
   position: absolute;
-  bottom: 2;
-  left: 70%;
-  width: 100%;
+  bottom: 0;
+  left: 2vw;
+  width: 22vw;
   z-index: 2; /* lag bag korallen */
 }
 
@@ -168,7 +168,7 @@
   max-width: 28vw;
   right: calc(-1 * var(--off-fish2));
   z-index: 0; /* lag af bilerne */
-  animation: fish2 3.5s linear infinite;
+  animation: fish2 6.3s linear infinite;
   cursor: pointer;
 }
 @keyframes fish2 {
@@ -250,7 +250,7 @@
   max-width: 28vw;
   right: calc(-1 * var(--off-fish6));
   z-index: 1; /* lag af bilerne */
-  animation: fish6 5s linear infinite;
+  animation: fish6 7s linear infinite;
   cursor: pointer;
 }
 @keyframes fish6 {
