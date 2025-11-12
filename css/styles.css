@@ -1,34 +1,293 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
+:root {
+  --font-body: "Poppins", sans-serif;
+  /* Farver */
+  --color-sky-top: #a6d8ff;
+  --color-sky-mid: #ffffff;
+  --color-sky-bot: #ffffff;
+  --color-night: #222833;
+  --color-sun: #ffffff;
+
+  /* Billede størrelser (px) */
+  --sun-size: 100px;
+  --fish-w: 200px;
+
+  /* Start /exit offset (px) */
+  --off-fish1: 200px;
+  --off-fish2: 200px;
+  --off-fish3: 200px;
+  --off-fish4: 200px;
+  --off-fish5: 200px;
+  --off-fish6: 200px;
+}
+
+/* ---------------------------------------------------------
+   Global reset
+--------------------------------------------------------- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-body);
+}
+
+/* ---------------------------------------------------------
+   Scene
+--------------------------------------------------------- */
+.scene {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+}
+
+/* ---------------------------------------------------------
+   Baggrund (parallax)
+   - Brug vw i animationen: 0 → -100vw
+   - Sæt background-size til 100vw for at matche bevægelse
+--------------------------------------------------------- */
+.bg {
+  position: absolute;
+  inset: 0; /* fyld hele .scene */
+  background-image: url("../img/baggrund.png");
+  background-repeat: no-repeat;
+  background-position: center bottom;
+  background-size: cover;
+}
+
+/* ---------------------------------------------------------
+   Kroaler
+--------------------------------------------------------- */
+/* Grøn koral nederst til venstre */
+.coral1 {
+  position: absolute;
+  bottom: -1vw;
+  left: 9vw;
+  width: 15vw;
+  z-index: 4; /* foran havfruen */
+}
+
+/* pink koral til højre for den grønne */
+.coral2 {
+  position: absolute;
+  bottom: -1vw;
+  left: -2vw;
+  width: 19vw;
+  z-index: 3;
+}
+
+/* orange koral til venstre */
+.coral3 {
+  position: absolute;
+  bottom: -1vw;
+  right: 15vw;
+  width: 12vw;
+  z-index: 3;
+}
+
+/* Big green koral til venstre for den orange koral */
+.coral4 {
+  position: absolute;
+  bottom: -1vw;
+  right: -1vw;
+  width: 20vw;
+  z-index: 6;
+}
+
+/* ---------------------------------------------------------
+   Havfrue
+--------------------------------------------------------- */
+.girl {
+  position: absolute;
+  bottom: 0;
+  left: 8vw;
+  width: 22vw;
+  z-index: 2; /* lag bag korallen */
+}
+
+/* ---------------------------------------------------------
+   Søstjerne
+--------------------------------------------------------- */
+.starfish {
+  position: absolute;
+  bottom: 3.3vw; /* stå fast på havbunden */
+  left: 28vw; /* justér, så den ligger lige under havfruens hale */
+  width: 8vw;
+  z-index: 3;
+}
+
+/* ---------------------------------------------------------
+   Fiske 
+   - fish1 = nemo 
+   - px for selve billedstørrelsen
+   - vw/vh til placering og ALLE animationsafstande
+--------------------------------------------------------- */
+.fish1 {
+  position: absolute;
+  bottom: 50.8vh;
+  width: var(--fish-w);
+  max-width: 28vw;
+  z-index: 5; /* lag af bilerne */
+  left: calc(
+    -1 * var(--off-fish1)
+  ); /*beregner hvor bilen starter uden for skærmen */
+  animation: fish1 18s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish1 {
+  0% {
+    transform: translateX(0);
+  }
+  90%,
+  100% {
+    transform: translateX(calc(100vw + var(--off-fish1)));
+  }
+}
+
+/*   fish2 dory   */
+.fish2 {
+  position: absolute;
+  bottom: 14.5vh;
+  width: var(--fish-w);
+  max-width: 28vw;
+  right: calc(-1 * var(--off-fish2));
+  z-index: 0; /* lag af bilerne */
+  animation: fish2 3.5s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish2 {
+  0% {
+    transform: translateX(0) rotateY(180deg); /* rotateY flipper billdet vandret */
+  }
+  90%,
+  100% {
+    transform: translateX(calc(-100vw - var(--off-fish2))) rotateY(180deg);
+  }
+}
+
+/* fish3 kuglefisk */
+.fish3 {
+  position: absolute;
+  bottom: 63.5vh;
+  width: var(--fish-w);
+  max-width: 28vw;
+  right: calc(-1 * var(--off-fish3));
+  z-index: 1; /* lag af bilerne */
+  animation: fish3 20.1s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish3 {
+  0% {
+    transform: translateX(0) rotateY(180deg); /* har fjernet rotaeY så den nu er flippet vandrettet */
+  }
+  90%,
+  100% {
+    transform: translateX(calc(-100vw - var(--off-fish3))) rotateY(180deg);
+  }
+}
+
+/* fish4 moorishl */
+.fish4 {
+  position: absolute;
+  bottom: 70vh;
+  width: 40vh;
+  max-width: 28vw;
+  z-index: 0;
+  left: calc(-1 * var(--off-fish4));
+  animation: fish4 16s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish4 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + var(--off-fish4)));
+  }
+}
+
+/* fish5  moorishl */
+.fish5 {
+  position: absolute;
+  bottom: 60vh;
+  width: var(--fish-w);
+  max-width: 28vw;
+  z-index: 4;
+  left: calc(-1 * var(--off-fish5));
+  animation: fish5 9s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish5 {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(calc(100vw + var(--off-fish5)));
+  }
+}
+
+/* fish6 rensefisk */
+.fish6 {
+  position: absolute;
+  bottom: 40.5vh;
+  width: var(--fish-w);
+  max-width: 28vw;
+  right: calc(-1 * var(--off-fish6));
+  z-index: 1; /* lag af bilerne */
+  animation: fish6 5s linear infinite;
+  cursor: pointer;
+}
+@keyframes fish6 {
+  0% {
+    transform: translateX(0) rotateY(180deg); /* har fjernet rotaeY så den nu er flippet vandrettet */
+  }
+  90%,
+  100% {
+    transform: translateX(calc(-100vw - var(--off-fish6))) rotateY(180deg);
+  }
+}
+
+/* ---------------------------------------------------------
+   Ikoner til at skifte side
+--------------------------------------------------------- */
+/* Spilleside-knap (ikon) */
+.gameBtn {
+  position: absolute;
+  bottom: 2vw;
+  right: 2vw;
+  width: 10vw;
+  cursor: pointer;
+  transition: transform 0.3s ease, filter 0.3s ease;
+  z-index: 10;
+}
+
+.gameBtn img {
+  width: 100%;
+  border-radius: 50%;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25); /* blød skygge */
+}
+
+/* ________________________________________________________________________________________ */
+
 /* H A V F R U E  M U N D S T Y R I N G */
-.havfrue-åben{
+/*.havfrue-åben{
   display: none;
 
 }
- 
+ */
 
 /* T A L E B O B L E N  E R  S K J U L T */
-.taleboble {
+/*.taleboble {
   position: absolute;
   top: 20%;   /* Du kan flytte den senere */
-  left: 55%;  /* Du kan flytte den senere */
-  width: 250px;
-  display: none;
-}
+/*left: 55%;  /* Du kan flytte den senere */
+/*width: 250px;
+  display: none; /*/ /*
 
 
 .taleboble img {
   width: 100%;
 }
-
-
-
-
-
-
-
-
-
 
 * {
   margin: 0;
@@ -39,29 +298,10 @@ body {
   font-family: "Poppins", sans-serif;
 }
 
-/* Sektionen fylder hele vinduet */
-.havfrue-skærm {
-  display: grid;
-  place-items: center;
-  height: 100vh;
-  background: #02131e; /* “vandfarve” rundt om billedet */
-  overflow: hidden;
-}
-
-/* Scene med samme proportioner som baggrundsbilledet */
-.scene {
-  position: relative;
-  aspect-ratio: 16 / 9; /* justér efter dit billede */
-  height: 100%;
-  max-width: 100%;
-  background-image: url("../havfrue-img/baggrund-kiste.png");
-  background-size: contain;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+*/
 
 /* Havfruen i nederste venstre hjørne af billedet */
-.mermaid {
+/*.mermaid {
   position: absolute;
   bottom: 0;
   left: 0;
@@ -88,121 +328,7 @@ body {
   }
 }
 
-/* Fisk ovenpå billedet */
-.fish {
-  position: absolute;
-  inset: 0;
-  z-index: 4;
-  pointer-events: auto;
-}
-.fish img {
-  position: absolute;
-  width: clamp(60px, 8vw, 140px);
-  height: auto;
-  pointer-events: auto;
-  cursor: pointer; 
-}
-
-/* Eksempelplaceringer — justér frit */
-.starfisk {
-  left: 12%;
-  bottom: 14%;
-  width: 70px;
-}
-.nemo {
-  left: 42%;
-  top: 50%;
-}
-.dory {
-  right: 20%;
-  bottom: 25%;
-}
-.ondfisk {
-  right: 5%;
-  top: 38%;
-}
-.gulfisk {
-  right: 15%;
-  top: 12%;
-}
-.stribefisk {
-  left: 5%;
-  bottom: 28%;
-}
-.kuglefiskstor {
-  left: 12%;
-  top: 8%;
-}
-.kuglefisklille {
-  right: 30%;
-  top: 15%;
-}
-
-/* ---------------------------------------------------------
-   Biler
-   - px for selve billedstørrelsen
-   - vw/vh til placering og ALLE animationsafstande
---------------------------------------------------------- */
-
-.car1 {
-  position: absolute;
-  bottom: 2.8vh;
-  width: var(--car-w);
-  max-width: 28vw;
-  z-index: 1;
-  left: calc(-1 * var(--off-car1));
-  animation: car1 18s linear infinite;
-}
-
-@keyframes car1 {
-  0% {
-    transform: translateX(0);
-  }
-  100% {
-    transform: translateX(calc(100vw + var(--off-car1)));
-  }
-}
-
-.car2 {
-  position: absolute;
-  bottom: 2.8vh;
-  width: var(--car-w);
-  max-width: 28vw;
-  right: calc(-1 * var(--off-car2));
-  z-index: 1;
-  animation: car2 12s linear infinite;
-}
-
-@keyframes car2 {
-  0% {
-    transform: translateX(0) rotateY(180deg);
-  }
-  90%,
-  100% {
-    transform: translateX(calc(-100vw - var(--off-car2))) rotateY(180deg);
-  }
-}
-
-/* car3: venstre → højre (spejlvendt) */
-.car3 {
-  position: absolute;
-  bottom: -3.4vh;
-  width: var(--car-w);
-  max-width: 28vw;
-  z-index: 1;
-  left: calc(-1 * var(--off-car3));
-  will-change: transform;
-  animation: car3 8s linear infinite;
-}
-
-@keyframes car3 {
-  0% {
-    transform: translateX(0) rotateY(180deg);
-  }
-  100% {
-    transform: translateX(calc(100vw + var(--off-car3))) rotateY(180deg);
-  }
-}
+/* Eksempelplaceringer — justér frit 
 
 body {
   margin: 0;
@@ -223,8 +349,8 @@ body {
   width: 150px;
   animation: swim 6s ease-in-out infinite,
     tail 1s ease-in-out infinite alternate;
-}
-/* lille hale bevægelse */
+}*/
+/* lille hale bevægelse
 @keyframes tail {
   from {
     rotate: 0deg;
@@ -232,14 +358,4 @@ body {
   to {
     rotate: 5deg;
   }
-}
-
-
-
-
-
-
-
-
-
-
+}*/
