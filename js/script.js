@@ -31,19 +31,19 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   // Tilføjer click-listener på hver fisk
-  fisk.forEach(function (item) {
-    const el = document.querySelector("." + item.klasse);
-    if (el) {
-      el.addEventListener("click", function () {
+  fisk.forEach(function (fiskObjekt) {
+    const elem = document.getElementsByClassName(fiskObjekt.klasse)[0];
+    if (elem) {
+      elem.addEventListener("click", function () {
         if (
           boble.style.display === "block" &&
           bobleBillede.src &&
-          bobleBillede.src.includes(item.billede)
+          bobleBillede.src.includes(fiskObjekt.billede)
         ) {
           boble.style.display = "none";
           havfrueSnak(false);
         } else {
-          bobleBillede.src = item.billede;
+          bobleBillede.src = fiskObjekt.billede;
           boble.style.display = "block";
           havfrueSnak(true);
         }
