@@ -52,7 +52,7 @@
 }
 
 /* Spilleside-knap (ikon) */
-.homeBtn {
+.home-button {
   position: absolute;
   bottom: 2vw;
   right: 2vw;
@@ -62,7 +62,7 @@
   z-index: 10;
 }
 
-.homeBtn img {
+.home-button img {
   width: 100%;
   border-radius: 50%;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.25); /* blød skygge */
