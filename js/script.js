@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const getYellowFish = document.getElementById("yellowFish");
   const getMoorishl = document.getElementById("moorishl");
   const getRensefisk = document.getElementById("rensefisk");
-  const getStarFish = document.getElementById("starfish");
+  const getStarFish = document.getElementById("star");
 
   // hent lydfiler
   const soundBlob = new Audio("sound/blob.wav");
@@ -104,6 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
     getMoorishl.addEventListener("click", () => spilLyde(moolyd));
   if (getRensefisk)
     getRensefisk.addEventListener("click", () => spilLyde(stribelyd));
+  if (getStarFish)
+    getStarFish.addEventListener("click", () => spilLyde(starfishlyd));
 });
 
 //???????
