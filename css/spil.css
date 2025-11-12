@@ -1,54 +1,138 @@
-/* ---------------------------------------------------------
-   Baggrund (parallax)
-   - Brug vw i animationen: 0 → -100vw
-   - Sæt background-size til 100vw for at matche bevægelse
---------------------------------------------------------- */
-.bg {
-  position: absolute;
-  inset: 0; /* fyld hele .scene */
-  background-image: url("../img/baggrund.png");
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+/* Spilscene */
+#game {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  overflow: hidden;
+  text-align: center;
+  background-image: url("../pacman-img/baggrund.png");
   background-repeat: no-repeat;
-  background-position: center bottom;
+  background-position: center;
   background-size: cover;
+
+  border: 10px dashed red;
+  box-sizing: border-box;
 }
 
-/* ---------------------------------------------------------
-   Kroaler
---------------------------------------------------------- */
-/* Grøn koral nederst til venstre */
-.coral1 {
+/* Pacman / dodger */
+#dodger {
   position: absolute;
-  bottom: -1vw;
-  left: 9vw;
-  width: 15vw;
-  z-index: 4; /* foran havfruen */
+  width: 160px;
+  height: 80px;
+  background-image: url("../pacman-img/pacman-åben.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+  align-self: center;
+  transform: translateX(-20px); /* halv bredde (40px / 2) */
+  z-index: 50; /* over korallerne */
+  animation: nomnom 0.3s steps(2) infinite;
 }
 
-/* pink koral til højre for den grønne */
-.coral2 {
-  position: absolute;
-  bottom: -1vw;
-  left: -2vw;
-  width: 19vw;
-  z-index: 3;
+@keyframes nomnom {
+  0% {
+    background-image: url("../pacman-img/pacman-åben.png");
+  }
+  50% {
+    background-image: url("../pacman-img/pacman-luk.png");
+  }
+  100% {
+    background-image: url("../pacman-img/pacman-åben.png");
+  }
 }
 
-/* orange koral til venstre */
-.coral3 {
+/* Knap-container */
+.controls {
   position: absolute;
-  bottom: -1vw;
-  right: 15vw;
-  width: 12vw;
-  z-index: 3;
+  bottom: 4vh; /* lidt op fra bunden */
+  left: 50%;
+  transform: translateX(-50%);
+  width: 200px;
+  height: 120px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-/* Big green koral til venstre for den orange koral */
-.coral4 {
+/* Alle knapper */
+.ctrl-btn {
+  width: 70px;
+  height: 70px;
+  cursor: pointer;
+  user-select: none;
+  transition: transform 0.1s ease;
+}
+
+/* Tryk-animeret effekt */
+.ctrl-btn:active {
+  transform: scale(0.9);
+}
+
+/* Placering som pilekryds */
+.ctrl-btn.up {
   position: absolute;
-  bottom: -1vw;
-  right: -1vw;
-  width: 20vw;
-  z-index: 6;
+  top: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ctrl-btn.down {
+  position: absolute;
+  bottom: -20px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.ctrl-btn.left {
+  position: absolute;
+  left: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.ctrl-btn.right {
+  position: absolute;
+  right: -10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Sten (placeholder) */
+.rock {
+  width: 20px;
+  height: 20px;
+  background: tan;
+  position: absolute;
+}
+.rock:before {
+  content: "";
+  border-bottom: 6px solid tan;
+  border-left: 6px solid #111;
+  border-right: 6px solid #111;
+  height: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  width: 9px;
+}
+.rock:after {
+  content: "";
+  border-left: 6px solid #111;
+  border-right: 6px solid #111;
+  border-top: 6px solid tan;
+  bottom: 0;
+  height: 0;
+  left: 0;
+  position: absolute;
+  width: 9px;
 }
 
 /* Spilleside-knap (ikon) */
@@ -61,75 +145,8 @@
   transition: transform 0.3s ease, filter 0.3s ease;
   z-index: 10;
 }
-
 .home-button img {
   width: 100%;
   border-radius: 50%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25); /* blød skygge */
-}
-
-/* pacman spillet */
-
-#dodger {
-  background-image: url(pacman-img/pacman-luk.png/);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 40px;
-  position: absolute;
-  width: 40px;
-}
-#game {
-  background: lightblue;
-  height: 400px;
-  width: 400px;
-  margin: 50px auto;
-  overflow: hidden;
-  position: relative;
-  text-align: center;
-  border-radius: 10px;
-  box-shadow: 0 0 30px white(0, 0, 255, 0.2),
-    inset 0 0 50px lightblue(0, 0, 255, 0.1);
-  border: 2px solid #0066cc;
-  animation: borderGlow 4s infinite alternate;
-}
-/* Game title */
-.game-title {
-  font-size: 2.5rem;
-  color: #fff;
-  text-align: center;
-  margin-bottom: 20px;
-  text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
-} /* Controls info */
-.controls-info {
-  text-align: center;
-  margin-top: 20px;
-  padding: 15px;
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 10px;
-  font-size: 0.9rem;
-  line-height: 1.5;
-}
-.controls-info p {
-  margin: 5px 0;
-} /* Footer */
-.footer {
-  margin-top: 20px;
-  text-align: center;
-  font-size: 0.8rem;
-  color: black;
-}
-
-#dodger {
-  background-image: url(pacman-img/pacman-luk.png);
-  background-size: contain;
-  background-repeat: no-repeat;
-  background-position: center;
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  bottom: 180px;
-  left: 180px;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25);
 }
