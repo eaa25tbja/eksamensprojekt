@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Havfrue skærm!!!</title>
-    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="stylesheet" href="css/havfrue.css" />
   </head>
   <body>
     <audio id="bgMusic" loop>
@@ -14,46 +14,21 @@
     <!-- opbyg HTML struktur her -->
     <section class="scene">
       <div class="bg">
-        <!-- koraler -->
-        <img
-          src="img/green-koral.png"
-          id="greenKoral"
-          class="coral1"
-          alt="greenKoral"
-        />
-        <img
-          src="img/pink-koral.png"
-          id="pinkKoral"
-          class="coral2"
-          alt="pinkKoral"
-        />
-        <img
-          src="img/orange-koral.png"
-          id="orangeKoral"
-          class="coral3"
-          alt="orangeKoral"
-        />
-        <img
-          src="img/big-green-koral.png"
-          id="bigGreenKoral"
-          class="coral4"
-          alt="bigGreenKoral"
-        />
 
         <!-- kiste åben og lukke -->
 
         <img
-          src="img/lukketkiste.png"
+          src="img/kiste/kiste-lukket.png"
           id="lukketkiste"
           class="kiste1"
-          alt="lukketkiste"
+          alt="Lukket Kiste"
           />
 
         <img
-          src="img/abenkiste.png"
+          src="img/kiste/kiste-aaben.png"
           id="abenkiste"
           class="kiste2"
-          alt="abenkiste"
+          alt="Åben Kiste"
           />
 
 
@@ -62,9 +37,9 @@
 
         <!-- havfrue -->
         <div class="havfrue">
-          <img src="img/havfrue.png" id="havfrue1" class="havfrue1" alt="havfrue" />
-          <img src="img/havfrue-open.png" class="havfrue-åben" alt="havfrue">
-          <img src="img/havfruelukket.png" class="havfrue-lukket" alt="havfrue">
+          <img src="img/havfrue/havfrue.png" id="havfrue1" class="havfrue1" alt="havfrue" />
+          <img src="img/havfrue/havfrue-open.png" class="havfrue-åben" alt="havfrue">
+          <img src="img/havfrue/havfrue-lukket.png" class="havfrue-lukket" alt="havfrue">
         </div>
 
         <!-- talebobler -->
@@ -73,18 +48,18 @@
         </div>
 
         <!-- Søstjerne -->
-        <img src="img/star.png" id="star" class="starfish" alt="star" />
+        <img src="img/sostjerne.png" id="star" class="starfish" alt="star" />
 
         <!-- fiskene -->
       <div class="fish">
-        <img src="img/nemo.png" id="nemo" class="fish1" alt="nemo" />
-        <img src="img/dory.png" id="dory" class="fish2" alt="dory" />
+        <img src="img/fisk/klovnefisk.png" id="nemo" class="fish1" alt="nemo" />
+        <img src="img/fisk/palet-kirurg.png" id="dory" class="fish2" alt="dory" />
         <div id="kuglefisk" class="fish3">
           <div class="fish3-inner"></div>
         </div>
-        <img src="img/yellow-fish.png" id="yellowFish" class="fish4" alt="yellowFish"/>
-        <img src="img/moorishl.png" id="moorishl" class="fish5" alt="moorishl"/>
-        <img src="img/rensefisk.png" id="rensefisk" class="fish6" alt="rensefisk"/>
+        <img src="img/fisk/gul-kirurg.png" id="yellowFish" class="fish4" alt="yellowFish"/>
+        <img src="img/fisk/moorish-idol.png" id="moorishl" class="fish5" alt="moorishl"/>
+        <img src="img/fisk/rensefisk.png" id="rensefisk" class="fish6" alt="rensefisk"/>
       </div>               
   
 
@@ -92,9 +67,9 @@
 
     <!-- Spilleside knap -->
     <a href="spil.html" class="gameBtn">
-      <img src="img/spilleside-ikon.png" alt="Gå til spilleside" />
+      <img src="img/pacman-knap.png" alt="Gå til spilleside" />
     </a>
 
-    <script src="js/script.js"></script>
+    <script src="js/havfrue.js"></script>
   </body>
 </html>
