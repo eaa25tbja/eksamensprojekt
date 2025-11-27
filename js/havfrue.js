@@ -25,13 +25,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fiske-array
   const fisk = [
-    { klasse: "starfish", billede: "img/infoseastar.png" },
-    { klasse: "fish1", billede: "img/infonemo.png" },
-    { klasse: "fish2", billede: "img/infodory.png" },
-    { klasse: "fish3", billede: "img/infokugle.png" },
-    { klasse: "fish4", billede: "img/infogulkirug.png" },
-    { klasse: "fish5", billede: "img/infomoorish.png" },
-    { klasse: "fish6", billede: "img/infobluestriped.png" },
+    { klasse: "starfish", billede: "img/talebobler/sostjerne-boble.png" },
+    { klasse: "fish1", billede: "img/talebobler/klovnefisk-boble.png" },
+    { klasse: "fish2", billede: "img/talebobler/palet-kirurg-boble.png" },
+    { klasse: "fish3", billede: "img/talebobler/kuglefisk-boble.png" },
+    { klasse: "fish4", billede: "img/talebobler/gul-kirurg-boble.png" },
+    { klasse: "fish5", billede: "img/talebobler/moorish-idol-boble.png" },
+    { klasse: "fish6", billede: "img/talebobler/rensefisk-boble.png" },
   ];
 
   // Click-event for hver fisk
