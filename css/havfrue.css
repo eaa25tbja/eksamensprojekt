@@ -14,29 +14,6 @@
   --off-fish6: 200px;
 }
 
-/* havfrue mundstyring */
-.havfrue-åben {
-  display: none;
-}
-.havfrue-lukket {
-  display: none;
-}
-
-/* talebobler skjult */
-.taleboble {
-  position: absolute;
-  top: 30%;
-  left: 33%;
-  width: 250px;
-  display: none;
-  z-index: 6;
-}
-
-.taleboble img {
-  width: 100%;
-  z-index: 6;
-}
-
 /* ---------------------------------------------------------
    Global reset
 --------------------------------------------------------- */
@@ -46,31 +23,59 @@
   box-sizing: border-box;
 }
 
+html,
+body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 /* ---------------------------------------------------------
-   Scene
+  Baggrund 
 --------------------------------------------------------- */
 .scene {
   position: relative;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
 }
 
-/* ---------------------------------------------------------
-   Baggrund (parallax)
-   - Brug vw i animationen: 0 → -100vw
-   - Sæt background-size til 100vw for at matche bevægelse
---------------------------------------------------------- */
+/* Fælles til begge baggrunde */
 .bg {
   position: absolute;
-  inset: 0; /* fyld hele .scene */
-  background-image: url("../img/baggrund/baggrund-pacman.png");
+  inset: 0;
+  background-size: cover; /* fyld hele arealet */
+  background-position: center; /* centrer billedet */
   background-repeat: no-repeat;
-  background-position: center bottom;
-  background-size: cover;
+}
+
+/* Første baggrund */
+.bg1 {
+  background-image: url("../img/baggrund/baggrund1-havfrue.png");
+}
+
+/* Anden baggrund der fader ind/ud */
+.bg2 {
+  background-image: url("../img/baggrund/baggrund2-havfrue.png");
+  opacity: 0;
+  animation: fadeBg 2s infinite ease-in-out;
+}
+
+/* Simpel fade-animation */
+@keyframes fadeBg {
+  0% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 /* ---------------------------------------------------------
-   Kroaler
+  Kiste
 --------------------------------------------------------- */
 
 /* kiste lukket*/
@@ -104,7 +109,26 @@
 }
 
 /* ---------------------------------------------------------
-   Havfrue
+  Talebobler
+--------------------------------------------------------- */
+
+/* talebobler skjult */
+.taleboble {
+  position: absolute;
+  top: 30%;
+  left: 33%;
+  width: 250px;
+  display: none;
+  z-index: 6;
+}
+
+.taleboble img {
+  width: 100%;
+  z-index: 6;
+}
+
+/* ---------------------------------------------------------
+  Havfrue
 --------------------------------------------------------- */
 .havfrue {
   position: absolute;
@@ -130,9 +154,19 @@
   display: none;
 }
 
-/* ---------------------------------------------------------
-   Søstjerne
---------------------------------------------------------- */
+/* havfrue mundstyring */
+.havfrue-åben {
+  display: none;
+}
+.havfrue-lukket {
+  display: none;
+}
+
+/*-------------------------------------------
+  Alle fisk
+-------------------------------------------*/
+
+/*   søstjerne  */
 .starfish {
   position: absolute;
   bottom: 3.3vw; /* stå fast på havbunden */
@@ -142,12 +176,7 @@
   cursor: pointer;
 }
 
-/* ---------------------------------------------------------
-   Fiske 
-   - fish1 = nemo 
-   - px for selve billedstørrelsen
-   - vw/vh til placering og ALLE animationsafstande
---------------------------------------------------------- */
+/*   fish1 klovnefisk   */
 .fish1 {
   position: absolute;
   bottom: 50.8vh;
@@ -170,7 +199,7 @@
   }
 }
 
-/*   fish2 dory   */
+/*   fish2 palet kirurg   */
 .fish2 {
   position: absolute;
   bottom: 14.5vh;
@@ -191,7 +220,7 @@
   }
 }
 
-/* ------- KUGLEFISK ------*/
+/* fish3 Kuglefisk*/
 .fish3 {
   position: absolute;
   bottom: 63.5vh;
@@ -237,7 +266,7 @@
   }
 }
 
-/* fish4 moorishl */
+/* fish4 gul kirurg */
 .fish4 {
   position: absolute;
   bottom: 70vh;
@@ -257,7 +286,7 @@
   }
 }
 
-/* fish5  moorishl */
+/* fish5  moorish idol */
 .fish5 {
   position: absolute;
   bottom: 60vh;
@@ -299,9 +328,10 @@
 }
 
 /* ---------------------------------------------------------
-   Ikoner til at skifte side
+  Knap til at skifte side
 --------------------------------------------------------- */
-/* Spilleside-knap (ikon) */
+
+/* Spilleside-knap */
 .gameBtn {
   position: absolute;
   bottom: 2vw;
@@ -315,5 +345,4 @@
 .gameBtn img {
   width: 100%;
   border-radius: 50%;
-  box-shadow: 0 0 15px rgba(0, 0, 0, 0.25); /* blød skygge */
 }
