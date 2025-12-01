@@ -40,28 +40,24 @@ body {
   overflow: hidden;
 }
 
-/* Fælles til begge baggrunde */
 .bg {
   position: absolute;
   inset: 0;
-  background-size: cover; /* fyld hele arealet */
-  background-position: center; /* centrer billedet */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
 }
 
-/* Første baggrund */
 .bg1 {
   background-image: url("../img/baggrund/baggrund1-havfrue.png");
 }
 
-/* Anden baggrund der fader ind/ud */
 .bg2 {
   background-image: url("../img/baggrund/baggrund2-havfrue.png");
   opacity: 0;
   animation: fadeBg 2s infinite ease-in-out;
 }
 
-/* Simpel fade-animation */
 @keyframes fadeBg {
   0% {
     opacity: 0;

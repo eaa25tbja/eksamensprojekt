@@ -75,6 +75,7 @@ function checkCollisions() {
       score++;
       updateScore();
       foodEl.remove();
+      playSoundWhenPoint();
       return false;
     }
     return true;
@@ -246,39 +247,35 @@ document.addEventListener("keydown", function (e) {
 
   if (e.key === "ArrowLeft") {
     moveDodgerLeft();
-    playSoundOnMovement();
     dodger.style.transform = "scaleX(1)";
   }
 
   if (e.key === "ArrowRight") {
     moveDodgerRight();
-    playSoundOnMovement();
     dodger.style.transform = "scaleX(-1)";
   }
 
   if (e.key === "ArrowUp") {
     moveDodgerUp();
-    playSoundOnMovement();
   }
 
   if (e.key === "ArrowDown") {
     moveDodgerDown();
-    playSoundOnMovement();
   }
 });
 
 /* ------------------------------------------
    Lyd
 --------------------------------------------- */
-const movementSound = document.getElementById("movementSound");
-function playSoundOnMovement() {
-  movementSound.currentTime = 0;
-  movementSound.play();
+const pointSound = document.getElementById("pointSound");
+function playSoundWhenPoint() {
+  pointSound.currentTime = 0;
+  pointSound.play();
 }
 
 const gameoverSound = document.getElementById("gameoverSound");
 function playGameoverSound() {
-  movementSound.currentTime = 0;
+  gameoverSound.currentTime = 0;
   gameoverSound.play();
 }
 
