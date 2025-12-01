@@ -1,37 +1,48 @@
 "use strict";
 
-// Henter elementerne fra HTML
-const game = document.getElementById("game"); // hele spilområdet
-const dodger = document.getElementById("dodger"); // selve fisken/pacman
+/* ==========================================
+   DOM ELEMENTER
+   (Henter elementer fra HTML)
+============================================== */
+const game = document.getElementById("game"); // Spilområde
+const dodger = document.getElementById("dodger"); // Pacman-fisken
 
-// Score & game over
+/* ==========================================
+   SCORE & GAME OVER UI
+============================================== */
 const scoreElement = document.getElementById("score");
 const gameOverScreen = document.getElementById("gameOverScreen");
 const finalScoreElement = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
-//baggrundsmusik
+/* ==========================================
+   LYD / AUDIO
+============================================== */
 const bgMusic = document.getElementById("bgMusic");
 
+/* ==========================================
+   SPIL-STATUS & VARIABLER
+============================================== */
 let score = 0;
 let isGameOver = false;
+let foods = []; // Mad-objekter
+let enemy = null; // Fjenden
 
-// Arrays til mad og fjende
-let foods = [];
-let enemy = null;
-
+/* ==========================================
+   INITIALISERING VED LOAD
+============================================== */
 window.addEventListener("load", () => {
-  //starter dodger i midten af skærmen
+  // Placerer spilleren i midten
   const centerX = (game.clientWidth - dodger.offsetWidth) / 2;
   const centerY = (game.clientHeight - dodger.offsetHeight) / 2;
   dodger.style.left = centerX + "px";
   dodger.style.bottom = centerY + "px";
 
-  //tilføjer ond fisk og mad på siden
+  // Spawn mad og fjende
   spawnNewFoodBatch();
   createEnemy();
 
-  //baggrundsmusik
+  // Start musik
   bgMusic.volume = 0.2;
   bgMusic.play();
 });
