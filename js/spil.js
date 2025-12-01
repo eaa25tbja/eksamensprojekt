@@ -1,36 +1,35 @@
 "use strict";
 
-/* ==========================================
+/* -----------------------------------------
    DOM ELEMENTER
-   (Henter elementer fra HTML)
-============================================== */
+-------------------------------------------- */
 const game = document.getElementById("game"); // Spilområde
 const dodger = document.getElementById("dodger"); // Pacman-fisken
 
-/* ==========================================
-   SCORE & GAME OVER UI
-============================================== */
+/* ------------------------------------------
+   Score og Gameover
+--------------------------------------------- */
 const scoreElement = document.getElementById("score");
 const gameOverScreen = document.getElementById("gameOverScreen");
 const finalScoreElement = document.getElementById("finalScore");
 const restartBtn = document.getElementById("restartBtn");
 
-/* ==========================================
-   LYD / AUDIO
-============================================== */
+/* -----------------------------------------
+   Baggrundsmusik
+-------------------------------------------- */
 const bgMusic = document.getElementById("bgMusic");
 
-/* ==========================================
+/* ------------------------------------------
    SPIL-STATUS & VARIABLER
-============================================== */
+--------------------------------------------- */
 let score = 0;
 let isGameOver = false;
 let foods = []; // Mad-objekter
 let enemy = null; // Fjenden
 
-/* ==========================================
+/* -------------------------------------------
    INITIALISERING VED LOAD
-============================================== */
+---------------------------------------------- */
 window.addEventListener("load", () => {
   // Placerer spilleren i midten
   const centerX = (game.clientWidth - dodger.offsetWidth) / 2;
@@ -189,7 +188,6 @@ function triggerGameOver() {
 // Restart-knap
 if (restartBtn) {
   restartBtn.addEventListener("click", () => {
-    // Easiest: reload siden
     window.location.reload();
   });
 }
@@ -302,21 +300,17 @@ if (btnLeft)
   btnLeft.addEventListener("click", () => {
     moveDodgerLeft();
     dodger.style.transform = "scaleX(1)";
-    playSoundOnMovement();
   });
 if (btnRight)
   btnRight.addEventListener("click", () => {
     moveDodgerRight();
     dodger.style.transform = "scaleX(-1)";
-    playSoundOnMovement();
   });
 if (btnUp)
   btnUp.addEventListener("click", () => {
     moveDodgerUp();
-    playSoundOnMovement();
   });
 if (btnDown)
   btnDown.addEventListener("click", () => {
     moveDodgerDown();
-    playSoundOnMovement();
   });

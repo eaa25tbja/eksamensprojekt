@@ -4,14 +4,23 @@ document.addEventListener("DOMContentLoaded", function () {
   // DOM-elementer
   const havfrue = document.getElementById("havfrue1");
   const havfrueLukket = document.querySelector(".havfrue-lukket");
-  const havfrueAaben = document.querySelector(".havfrue-åben");
+  const havfrueAaben = document.querySelector(".havfrue-open");
   const boble = document.querySelector(".taleboble");
   const bobleBillede = document.getElementById("taleboble-billede");
 
+  // Kiste-elementer
+  const lukketKiste = document.getElementById("lukketkiste");
+  const aabenKiste = document.getElementById("abenkiste");
+
   //baggrundsmusik
   const bgMusic = document.getElementById("bgMusic");
-  bgMusic.volume = 0.2;
-  bgMusic.play();
+  if (bgMusic) {
+    bgMusic.volume = 0.2;
+    // Kan blive blokeret af browseren, men koden er ok
+    bgMusic.play().catch(() => {
+      // Ignorer hvis autoplay bliver blokeret
+    });
+  }
 
   // Funktion: Skift havfruens mund
   function havfrueSnak(start) {
@@ -67,65 +76,71 @@ document.addEventListener("DOMContentLoaded", function () {
   // Start med lukket mund
   havfrueSnak(false);
 
-  // hent fisk fra HTML
-  const getNemo = document.getElementById("nemo");
-  const getDory = document.getElementById("dory");
+  // hent fisk fra HTML (via ID)
+  const getKlovnefisk = document.getElementById("klovnefisk");
+  const getPaletKirurg = document.getElementById("palet-kirurg");
   const getKuglefisk = document.getElementById("kuglefisk");
-  const getYellowFish = document.getElementById("yellowFish");
-  const getMoorishl = document.getElementById("moorishl");
+  const getGulKirurg = document.getElementById("gul-kirurg");
+  const getMoorishIdol = document.getElementById("moorish-idol");
   const getRensefisk = document.getElementById("rensefisk");
-  const getStarFish = document.getElementById("star");
+  const getStarfish = document.getElementById("starfish");
 
   // hent lydfiler
   const soundBlob = new Audio("sound/blob.wav");
-  const kuglelyd = new Audio("sound/kuglefisk.mp3");
-  const nemolyd = new Audio("sound/klovnefisk.mp3");
-  const dorylyd = new Audio("sound/paletkirurg.mp3");
-  const gullyd = new Audio("sound/gulfisk.mp3");
-  const moolyd = new Audio("sound/moorishidol.mp3");
-  const stribelyd = new Audio("sound/rensefisk.mp3");
-  const starfishlyd = new Audio("sound/sostjerne.mp3");
+  const kuglefiskLyd = new Audio("sound/kuglefisk.mp3");
+  const klovneFiskLyd = new Audio("sound/klovnefisk.mp3");
+  const paletKirurgLyd = new Audio("sound/paletkirurg.mp3");
+  const gulKirurgLyd = new Audio("sound/gulfisk.mp3");
+  const moorishIdolLyd = new Audio("sound/moorishidol.mp3");
+  const rensefiskLyd = new Audio("sound/rensefisk.mp3");
+  const starfishLyd = new Audio("sound/sostjerne.mp3");
   const soundAngel = new Audio("sound/angels.wav");
 
   // funktion som spiller begge lyde i rækkefølge
   function spilLyde(taleLyd) {
-    soundBlob.currentTime = 0; // starter blob fra begyndelsen
-    soundBlob.play(); // spiller blob
+    if (!taleLyd) return; // safety, hvis man glemmer at sende noget med
 
-    // venter 300 millisekunder (0,3 sek), så blob når at lyde først
+    soundBlob.currentTime = 0;
+    soundBlob.play();
+
     setTimeout(() => {
-      taleLyd.currentTime = 0; // starter havfruen fra begyndelsen
-      taleLyd.play(); // spiller havfruens stemme
+      taleLyd.currentTime = 0;
+      taleLyd.play();
     }, 300);
   }
 
   // klik på fiskene = spil lyde
-  if (getNemo) getNemo.addEventListener("click", () => spilLyde(nemolyd));
-  if (getDory) getDory.addEventListener("click", () => spilLyde(dorylyd));
+  if (getKlovnefisk)
+    getKlovnefisk.addEventListener("click", () => spilLyde(klovneFiskLyd));
+  if (getPaletKirurg)
+    getPaletKirurg.addEventListener("click", () => spilLyde(paletKirurgLyd));
   if (getKuglefisk)
-    getKuglefisk.addEventListener("click", () => spilLyde(kuglelyd));
-  if (getYellowFish)
-    getYellowFish.addEventListener("click", () => spilLyde(gullyd));
-  if (getMoorishl)
-    getMoorishl.addEventListener("click", () => spilLyde(moolyd));
+    getKuglefisk.addEventListener("click", () => spilLyde(kuglefiskLyd));
+  if (getGulKirurg)
+    getGulKirurg.addEventListener("click", () => spilLyde(gulKirurgLyd));
+  if (getMoorishIdol)
+    getMoorishIdol.addEventListener("click", () => spilLyde(moorishIdolLyd));
   if (getRensefisk)
-    getRensefisk.addEventListener("click", () => spilLyde(stribelyd));
-  if (getStarFish)
-    getStarFish.addEventListener("click", () => spilLyde(starfishlyd));
-  if (lukketKiste)
-    lukketKiste.addEventListener("click", () => spilLyde(soundAngel));
-  if (aabenKiste) aabenKiste.addEventListener("click", () => spilLyde());
-});
+    getRensefisk.addEventListener("click", () => spilLyde(rensefiskLyd));
+  if (getStarfish)
+    getStarfish.addEventListener("click", () => spilLyde(starfishLyd));
 
-const lukketKiste = document.getElementById("lukketkiste");
-const aabenKiste = document.getElementById("abenkiste");
+  // Kiste: lyd + åben/luk toggle
+  if (lukketKiste && aabenKiste) {
+    // start med lukket kiste synlig
+    lukketKiste.style.display = "block";
+    aabenKiste.style.display = "none";
 
-lukketKiste.addEventListener("click", () => {
-  lukketKiste.style.display = "none";
-  aabenKiste.style.display = "block";
-});
+    lukketKiste.addEventListener("click", () => {
+      spilLyde(soundAngel);
+      lukketKiste.style.display = "none";
+      aabenKiste.style.display = "block";
+    });
 
-aabenKiste.addEventListener("click", () => {
-  aabenKiste.style.display = "none";
-  lukketKiste.style.display = "block";
+    aabenKiste.addEventListener("click", () => {
+      spilLyde(soundAngel);
+      aabenKiste.style.display = "none";
+      lukketKiste.style.display = "block";
+    });
+  }
 });
