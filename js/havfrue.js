@@ -35,13 +35,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Fiske-array
   const fisk = [
-    { klasse: "starfish", billede: "img/talebobler/sostjerne-boble.png" },
-    { klasse: "fish1", billede: "img/talebobler/klovnefisk-boble.png" },
-    { klasse: "fish2", billede: "img/talebobler/palet-kirurg-boble.png" },
-    { klasse: "fish3", billede: "img/talebobler/kuglefisk-boble.png" },
-    { klasse: "fish4", billede: "img/talebobler/gul-kirurg-boble.png" },
-    { klasse: "fish5", billede: "img/talebobler/moorish-idol-boble.png" },
-    { klasse: "fish6", billede: "img/talebobler/rensefisk-boble.png" },
+    { klasse: "starfish", billede: "../img/talebobler/sostjerne-boble.png" },
+    { klasse: "fish1", billede: "../img/talebobler/klovnefisk-boble.png" },
+    { klasse: "fish2", billede: "../img/talebobler/palet-kirurg-boble.png" },
+    { klasse: "fish3", billede: "../img/talebobler/kuglefisk-boble.png" },
+    { klasse: "fish4", billede: "../img/talebobler/gul-kirurg-boble.png" },
+    { klasse: "fish5", billede: "../img/talebobler/moorish-idol-boble.png" },
+    { klasse: "fish6", billede: "../img/talebobler/rensefisk-boble.png" },
   ];
 
   // Click-event for hver fisk
@@ -86,15 +86,15 @@ document.addEventListener("DOMContentLoaded", function () {
   const getStarfish = document.getElementById("starfish");
 
   // hent lydfiler
-  const soundBlob = new Audio("sound/blob.wav");
-  const kuglefiskLyd = new Audio("sound/kuglefisk.mp3");
-  const klovneFiskLyd = new Audio("sound/klovnefisk.mp3");
-  const paletKirurgLyd = new Audio("sound/paletkirurg.mp3");
-  const gulKirurgLyd = new Audio("sound/gulfisk.mp3");
-  const moorishIdolLyd = new Audio("sound/moorishidol.mp3");
-  const rensefiskLyd = new Audio("sound/rensefisk.mp3");
-  const starfishLyd = new Audio("sound/sostjerne.mp3");
-  const soundAngel = new Audio("sound/angels.wav");
+  const soundBlob = new Audio("../sound/blob.wav");
+  const kuglefiskLyd = new Audio("../sound/kuglefisk.mp3");
+  const klovneFiskLyd = new Audio("../sound/klovnefisk.mp3");
+  const paletKirurgLyd = new Audio("../sound/paletkirurg.mp3");
+  const gulKirurgLyd = new Audio("../sound/gulfisk.mp3");
+  const moorishIdolLyd = new Audio("../sound/moorishidol.mp3");
+  const rensefiskLyd = new Audio("../sound/rensefisk.mp3");
+  const starfishLyd = new Audio("../sound/sostjerne.mp3");
+  const soundAngel = new Audio("../sound/angels.wav");
 
   // funktion som spiller begge lyde i rækkefølge
   function spilLyde(taleLyd) {
@@ -138,7 +138,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     aabenKiste.addEventListener("click", () => {
-      spilLyde(soundAngel);
       aabenKiste.style.display = "none";
       lukketKiste.style.display = "block";
     });
