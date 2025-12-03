@@ -36,15 +36,15 @@ body {
 .scene {
   position: relative;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
   overflow: hidden;
 }
 
 .bg {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: center;
+  background-size: cover; /* fyld hele skærmen, må gerne cutte */
+  background-position: bottom center; /* behold bunden, cut fra toppen */
   background-repeat: no-repeat;
 }
 
@@ -77,18 +77,18 @@ body {
 /* kiste lukket*/
 .kiste1 {
   position: absolute;
-  bottom: 7vw;
-  right: 10vw;
-  width: 20vw;
+  bottom: 33vw;
+  right: 0.5vw;
+  width: 1.5vw;
   z-index: 3;
 }
 
 /* kiste åben */
 .kiste2 {
   position: absolute;
-  bottom: 7vw;
-  right: 10vw;
-  width: 20vw;
+  bottom: 33vw;
+  right: 0.5vw;
+  width: 1.5vw;
   z-index: 3;
 }
 
@@ -111,15 +111,13 @@ body {
 /* talebobler skjult */
 .taleboble {
   position: absolute;
-  top: 30%;
-  left: 33%;
-  width: 250px;
+  bottom: 45vh;
+  left: 14.5vh;
   display: none;
   z-index: 6;
 }
 
 .taleboble img {
-  width: 100%;
   z-index: 6;
 }
 
@@ -128,9 +126,9 @@ body {
 --------------------------------------------------------- */
 .havfrue {
   position: absolute;
-  bottom: -2vw;
-  left: 13vw;
-  width: 22vw;
+  bottom: 4vw;
+  left: 5vw;
+  width: 33vw;
   z-index: 2;
   transform-origin: 30% 80%;
   animation: tail 1s ease-in-out infinite alternate;
@@ -165,8 +163,8 @@ body {
 /*   søstjerne  */
 .starfish {
   position: absolute;
-  bottom: 3.3vw; /* stå fast på havbunden */
-  left: 28vw; /* justér, så den ligger lige under havfruens hale */
+  bottom: 3.3vw;
+  right: 20vw;
   width: 8vw;
   z-index: 3;
   cursor: pointer;
