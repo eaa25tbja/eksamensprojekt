@@ -239,8 +239,8 @@ body {
   width: var(--fish-w);
   max-width: 28vw;
   right: calc(-1 * var(--off-fish2));
-  z-index: 3; /* lag af bilerne */
-  animation: fish2 6.3s linear infinite;
+  z-index: 3;
+  animation: fish2 12s linear infinite;
   cursor: pointer;
 }
 @keyframes fish2 {
@@ -273,8 +273,6 @@ body {
   height: 100%;
   background-size: contain;
   background-repeat: no-repeat;
-
-  /* Kun billed-skift her – ingen transform */
   animation: blob 2s steps(2) infinite;
 }
 
@@ -303,7 +301,7 @@ body {
 .fish4 {
   position: absolute;
   bottom: 70vh;
-  width: 40vh;
+  width: 30vh;
   max-width: 28vw;
   z-index: 0;
   left: calc(-1 * var(--off-fish4));
@@ -347,7 +345,7 @@ body {
   max-width: 28vw;
   right: calc(-1 * var(--off-fish6));
   z-index: 1; /* lag af bilerne */
-  animation: fish6 7s linear infinite;
+  animation: fish6 10s linear infinite;
   cursor: pointer;
 }
 @keyframes fish6 {
@@ -357,6 +355,79 @@ body {
   90%,
   100% {
     transform: translateX(calc(-100vw - var(--off-fish6))) rotateY(180deg);
+  }
+}
+
+@keyframes swim-warp {
+  0% {
+    transform: translateX(0) skewX(0deg) scaleX(1);
+  }
+  25% {
+    transform: translateX(1px) skewX(2deg) scaleX(1.03);
+  }
+  50% {
+    transform: translateX(0) skewX(0deg) scaleX(1);
+  }
+  75% {
+    transform: translateX(-1px) skewX(-2deg) scaleX(1.03);
+  }
+  100% {
+    transform: translateX(0) skewX(0deg) scaleX(1);
+  }
+}
+
+/*krabbe*/
+
+.krabbe {
+  position: absolute;
+  bottom: 14vw;
+  left: 30vw;
+  width: 10vw;
+  z-index: 2;
+  cursor: pointer;
+  animation: krabbe-walk 4s ease-in-out infinite;
+}
+
+@keyframes krabbe-walk {
+  0% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-2vw);
+  }
+  50% {
+    transform: translateX(0);
+  }
+  75% {
+    transform: translateX(2vw);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.krabbe-inner {
+  width: 100%;
+  height: auto;
+  transform-origin: center bottom;
+  animation: krabbe-rotate 0.5s ease-in-out infinite;
+}
+
+@keyframes krabbe-rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(-4deg) scaleX(1.02);
+  }
+  50% {
+    transform: rotate(0deg);
+  }
+  75% {
+    transform: rotate(4deg) scaleX(1.02);
+  }
+  100% {
+    transform: rotate(0deg);
   }
 }
 

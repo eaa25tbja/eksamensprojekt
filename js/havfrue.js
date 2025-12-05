@@ -42,6 +42,7 @@ document.addEventListener("DOMContentLoaded", function () {
     { klasse: "fish4", billede: "../img/talebobler/gul-kirurg-boble.png" },
     { klasse: "fish5", billede: "../img/talebobler/moorish-idol-boble.png" },
     { klasse: "fish6", billede: "../img/talebobler/rensefisk-boble.png" },
+    { klasse: "krabbe", billede: "../img/talebobler/krabbe-boble.png" },
   ];
 
   // Click-event for hver fisk
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const getMoorishIdol = document.getElementById("moorish-idol");
   const getRensefisk = document.getElementById("rensefisk");
   const getStarfish = document.getElementById("starfish");
+  const getKrabbe = document.getElementById("krabbe");
 
   // hent lydfiler
   const soundBlob = new Audio("../sound/blob.wav");
