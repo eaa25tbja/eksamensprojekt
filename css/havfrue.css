@@ -168,6 +168,26 @@ body {
   width: 8vw;
   z-index: 3;
   cursor: pointer;
+  animation: star-wobble 2s ease-in-out infinite;
+  transform-origin: 50% 50%; /* sikrer den roterer pænt */
+}
+
+@keyframes star-wobble {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  25% {
+    transform: rotate(4deg) scale(1.03);
+  }
+  50% {
+    transform: rotate(0deg) scale(1);
+  }
+  75% {
+    transform: rotate(-4deg) scale(1.03);
+  }
+  100% {
+    transform: rotate(0deg) scale(1);
+  }
 }
 
 /*   fish1 klovnefisk   */
