@@ -81,6 +81,25 @@ body {
   right: 0.5vw;
   width: 1.5vw;
   z-index: 3;
+  animation: chest-pop 2.5s ease-in-out infinite;
+  transform-origin: bottom center;
+}
+@keyframes chest-pop {
+  0% {
+    transform: translateY(0);
+  }
+  10% {
+    transform: translateY(-0.8vw);
+  } /* hop op */
+  18% {
+    transform: translateY(-0.3vw);
+  } /* lille bounce ned */
+  25% {
+    transform: translateY(0);
+  } /* tilbage til normal */
+  100% {
+    transform: translateY(0);
+  } /* pause indtil næste hop */
 }
 
 /* kiste åben */
