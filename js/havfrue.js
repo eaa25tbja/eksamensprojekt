@@ -1,28 +1,33 @@
 "use strict";
 
 document.addEventListener("DOMContentLoaded", function () {
-  // DOM-elementer
+  /* ------------------------------------------
+     Henter DOM-elementer
+  --------------------------------------------- */
   const havfrue = document.getElementById("havfrue1");
   const havfrueLukket = document.querySelector(".havfrue-lukket");
   const havfrueAaben = document.querySelector(".havfrue-open");
+
   const boble = document.querySelector(".taleboble");
   const bobleBillede = document.getElementById("taleboble-billede");
 
-  // Kiste-elementer
   const lukketKiste = document.getElementById("lukketkiste");
   const aabenKiste = document.getElementById("abenkiste");
 
-  //baggrundsmusik
+  const cta = document.querySelector(".cta"); //
+
+  /* ------------------------------------------
+     Baggrundsmusik
+  --------------------------------------------- */
   const bgMusic = document.getElementById("bgMusic");
   if (bgMusic) {
     bgMusic.volume = 0.2;
-    // Kan blive blokeret af browseren, men koden er ok
-    bgMusic.play().catch(() => {
-      // Ignorer hvis autoplay bliver blokeret
-    });
+    bgMusic.play().catch(() => {});
   }
 
-  // Funktion: Skift havfruens mund
+  /* ------------------------------------------
+     Funktion: Skift havfruens mund
+  --------------------------------------------- */
   function havfrueSnak(start) {
     if (start) {
       havfrueLukket.style.display = "none";
@@ -33,7 +38,9 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  // Fiske-array
+  /* ------------------------------------------
+     Fiske-array med bobler
+  --------------------------------------------- */
   const fisk = [
     { klasse: "starfish", billede: "../img/talebobler/sostjerne-boble.png" },
     { klasse: "fish1", billede: "../img/talebobler/klovnefisk-boble.png" },
@@ -45,19 +52,29 @@ document.addEventListener("DOMContentLoaded", function () {
     { klasse: "krabbe", billede: "../img/talebobler/krabbe-boble.png" },
   ];
 
-  // Click-event for hver fisk
+  /* ------------------------------------------
+     Klik på fisk = vis taleboble
+  --------------------------------------------- */
   fisk.forEach(function (fiskObjekt) {
     const element = document.getElementsByClassName(fiskObjekt.klasse)[0];
+
     if (element) {
       element.addEventListener("click", function (event) {
         event.stopPropagation();
+
+        // Skjul CTA når en fisk vælges
+        if (cta) cta.style.display = "none";
+
+        // Hvis samme boble vises → luk boble og vis CTA
         if (
           boble.style.display === "block" &&
           bobleBillede.src.includes(fiskObjekt.billede)
         ) {
           boble.style.display = "none";
           havfrueSnak(false);
+          if (cta) cta.style.display = "block";
         } else {
+          // Ellers vis boble med nyt billede
           bobleBillede.src = fiskObjekt.billede;
           boble.style.display = "block";
           havfrueSnak(true);
@@ -66,28 +83,28 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   });
 
-  // Klik udenfor = luk taleboble
+  /* ------------------------------------------
+     Klik udenfor = luk taleboble + vis CTA
+  --------------------------------------------- */
   document.addEventListener("click", function (event) {
-    if (!event.target.closest(".fish") && !event.target.closest(".taleboble")) {
+    if (
+      !event.target.closest(".fish") &&
+      !event.target.closest(".taleboble") &&
+      !event.target.closest(".krabbe")
+    ) {
       boble.style.display = "none";
       havfrueSnak(false);
+
+      if (cta) cta.style.display = "block";
     }
   });
 
   // Start med lukket mund
   havfrueSnak(false);
 
-  // hent fisk fra HTML (via ID)
-  const getKlovnefisk = document.getElementById("klovnefisk");
-  const getPaletKirurg = document.getElementById("palet-kirurg");
-  const getKuglefisk = document.getElementById("kuglefisk");
-  const getGulKirurg = document.getElementById("gul-kirurg");
-  const getMoorishIdol = document.getElementById("moorish-idol");
-  const getRensefisk = document.getElementById("rensefisk");
-  const getStarfish = document.getElementById("starfish");
-  const getKrabbe = document.getElementById("krabbe");
-
-  // hent lydfiler
+  /* ------------------------------------------
+     Hent lydfiler
+  --------------------------------------------- */
   const soundBlob = new Audio("../sound/blob.wav");
   const kuglefiskLyd = new Audio("../sound/kuglefisk.mp3");
   const klovneFiskLyd = new Audio("../sound/klovnefisk.mp3");
@@ -98,9 +115,11 @@ document.addEventListener("DOMContentLoaded", function () {
   const starfishLyd = new Audio("../sound/sostjerne.mp3");
   const soundAngel = new Audio("../sound/angels.wav");
 
-  // funktion som spiller begge lyde i rækkefølge
+  /* ------------------------------------------
+     Funktion: Spil blob + tale-lyd
+  --------------------------------------------- */
   function spilLyde(taleLyd) {
-    if (!taleLyd) return; // safety, hvis man glemmer at sende noget med
+    if (!taleLyd) return;
 
     soundBlob.currentTime = 0;
     soundBlob.play();
@@ -111,7 +130,18 @@ document.addEventListener("DOMContentLoaded", function () {
     }, 300);
   }
 
-  // klik på fiskene = spil lyde
+  /* ------------------------------------------
+     Klik på fisk = spil lyd
+  --------------------------------------------- */
+  const getKlovnefisk = document.getElementById("klovnefisk");
+  const getPaletKirurg = document.getElementById("palet-kirurg");
+  const getKuglefisk = document.getElementById("kuglefisk");
+  const getGulKirurg = document.getElementById("gul-kirurg");
+  const getMoorishIdol = document.getElementById("moorish-idol");
+  const getRensefisk = document.getElementById("rensefisk");
+  const getStarfish = document.getElementById("starfish");
+  const getKrabbe = document.getElementById("krabbe");
+
   if (getKlovnefisk)
     getKlovnefisk.addEventListener("click", () => spilLyde(klovneFiskLyd));
   if (getPaletKirurg)
@@ -127,9 +157,10 @@ document.addEventListener("DOMContentLoaded", function () {
   if (getStarfish)
     getStarfish.addEventListener("click", () => spilLyde(starfishLyd));
 
-  // Kiste: lyd + åben/luk toggle
+  /* ------------------------------------------
+     Kiste toggle + lyd
+  --------------------------------------------- */
   if (lukketKiste && aabenKiste) {
-    // start med lukket kiste synlig
     lukketKiste.style.display = "block";
     aabenKiste.style.display = "none";
 

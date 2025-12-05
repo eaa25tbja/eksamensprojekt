@@ -127,11 +127,18 @@ body {
   Talebobler
 --------------------------------------------------------- */
 
+.cta {
+  position: absolute;
+  bottom: 45.5vh;
+  left: 11.5vh;
+  z-index: 5;
+}
+
 /* talebobler skjult */
 .taleboble {
   position: absolute;
   bottom: 45vh;
-  left: 14.5vh;
+  left: 11.5vh;
   display: none;
   z-index: 6;
 }
@@ -418,13 +425,13 @@ body {
     transform: rotate(0deg);
   }
   25% {
-    transform: rotate(-4deg) scaleX(1.02);
+    transform: rotate(-4deg);
   }
   50% {
     transform: rotate(0deg);
   }
   75% {
-    transform: rotate(4deg) scaleX(1.02);
+    transform: rotate(4deg);
   }
   100% {
     transform: rotate(0deg);
