@@ -129,16 +129,16 @@ body {
 
 .cta {
   position: absolute;
-  bottom: 45.5vh;
-  left: 11.5vh;
+  bottom: 47.5vh;
+  left: 12.5vh;
   z-index: 5;
 }
 
 /* talebobler skjult */
 .taleboble {
   position: absolute;
-  bottom: 45vh;
-  left: 11.5vh;
+  bottom: 47vh;
+  left: 12.5vh;
   display: none;
   z-index: 6;
 }
