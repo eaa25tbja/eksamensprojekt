@@ -18,6 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
   /* ------------------------------------------
      Baggrundsmusik
   --------------------------------------------- */
+  /* 
+- Forsøger autoplay.
+- Starter musik ved første klik hvis autoplay fejler.
+*/
   const bgMusic = document.getElementById("bgMusic");
   if (bgMusic) {
     bgMusic.currentTime = 0;

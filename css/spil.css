@@ -34,7 +34,7 @@ body {
   background-size: contain;
   background-repeat: no-repeat;
   align-self: center;
-  transform: translateX(-20px); /* halv bredde (40px / 2) */
+  transform: translateX(-20px);
   z-index: 50;
   animation: nomnom 0.4s steps(2) infinite;
 }
@@ -55,7 +55,7 @@ body {
 /* Knap-container */
 .controls {
   position: absolute;
-  bottom: 4vh; /* lidt op fra bunden */
+  bottom: 4vh;
   left: 50%;
   transform: translateX(-50%);
   width: 300px;

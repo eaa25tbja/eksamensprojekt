@@ -3,7 +3,7 @@
 :root {
   /* Billede størrelser (px) */
   --sun-size: 100px;
-  --fish-w: 200px;
+  --fish-w: 160px;
 
   /* Start /exit offset (px) */
   --off-fish1: 200px;
@@ -79,8 +79,8 @@ body {
   position: absolute;
   bottom: 33vw;
   right: 0.5vw;
-  width: 1vw;
-  z-index: 3;
+  width: 240px;
+  z-index: 1;
   animation: kiste-anim 2.5s ease-in-out infinite;
   transform-origin: bottom center;
 }
@@ -107,13 +107,13 @@ body {
   position: absolute;
   bottom: 33vw;
   right: 0.5vw;
-  width: 1vw;
+  width: 240px;
   z-index: 3;
 }
 
 .kiste1,
 .kiste2 {
-  width: 300px;
+  width: 240px;
   cursor: pointer;
   transition: opacity 0.3s ease;
 }
@@ -130,21 +130,23 @@ body {
 .cta {
   position: absolute;
   bottom: 47.5vh;
-  left: 11.5vh;
-  z-index: 5;
+  left: 10.5vh;
+  z-index: 3;
+  width: 35vh;
 }
 
 /* talebobler skjult */
 .taleboble {
   position: absolute;
   bottom: 47vh;
-  left: 11.5vh;
+  left: 10.5vh;
   display: none;
-  z-index: 6;
+  z-index: 3;
 }
 
 .taleboble img {
   z-index: 6;
+  width: 35vh;
 }
 
 /* ---------------------------------------------------------
@@ -325,7 +327,7 @@ body {
   bottom: 60vh;
   width: var(--fish-w);
   max-width: 28vw;
-  z-index: 4;
+  z-index: 2;
   left: calc(-1 * var(--off-fish5));
   animation: fish5 9s linear infinite;
   cursor: pointer;
@@ -343,7 +345,7 @@ body {
 .fish6 {
   position: absolute;
   bottom: 40.5vh;
-  width: var(--fish-w);
+  width: 180px;
   max-width: 28vw;
   right: calc(-1 * var(--off-fish6));
   z-index: 1; /* lag af bilerne */
