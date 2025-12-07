@@ -20,9 +20,17 @@ document.addEventListener("DOMContentLoaded", function () {
   --------------------------------------------- */
   const bgMusic = document.getElementById("bgMusic");
   if (bgMusic) {
+    bgMusic.currentTime = 0;
     bgMusic.volume = 0.2;
     bgMusic.play().catch(() => {});
   }
+
+  document.addEventListener("click", function startMusic() {
+    if (bgMusic.paused) {
+      bgMusic.play().catch(() => {});
+    }
+    document.removeEventListener("click", startMusic);
+  });
 
   /* ------------------------------------------
      Havfrue mundstyring + tale-animation
