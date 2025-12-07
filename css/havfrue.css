@@ -43,8 +43,8 @@ body {
 .bg {
   position: absolute;
   inset: 0;
-  background-size: cover; /* fyld hele skærmen, må gerne cutte */
-  background-position: bottom center; /* behold bunden, cut fra toppen */
+  background-size: cover;
+  background-position: bottom center;
   background-repeat: no-repeat;
 }
 
@@ -79,7 +79,7 @@ body {
   position: absolute;
   bottom: 33vw;
   right: 0.5vw;
-  width: 1.5vw;
+  width: 1vw;
   z-index: 3;
   animation: kiste-anim 2.5s ease-in-out infinite;
   transform-origin: bottom center;
@@ -107,7 +107,7 @@ body {
   position: absolute;
   bottom: 33vw;
   right: 0.5vw;
-  width: 1.5vw;
+  width: 1vw;
   z-index: 3;
 }
 
@@ -192,7 +192,7 @@ body {
   z-index: 3;
   cursor: pointer;
   animation: star-wobble 2s ease-in-out infinite;
-  transform-origin: 50% 50%; /* sikrer den roterer pænt */
+  transform-origin: 50% 50%;
 }
 
 @keyframes star-wobble {
@@ -219,10 +219,8 @@ body {
   bottom: 50.8vh;
   width: var(--fish-w);
   max-width: 28vw;
-  z-index: 4; /* lag af bilerne */
-  left: calc(
-    -1 * var(--off-fish1)
-  ); /*beregner hvor bilen starter uden for skærmen */
+  z-index: 4;
+  left: calc(-1 * var(--off-fish1));
   animation: fish1 18s linear infinite;
   cursor: pointer;
 }
