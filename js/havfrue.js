@@ -4,9 +4,8 @@ document.addEventListener("DOMContentLoaded", function () {
   /* ------------------------------------------
      Henter DOM-elementer
   --------------------------------------------- */
-  const havfrue = document.getElementById("havfrue1");
+  const havfrueOpen = document.querySelector(".havfrue-open");
   const havfrueLukket = document.querySelector(".havfrue-lukket");
-  const havfrueAaben = document.querySelector(".havfrue-open");
 
   const boble = document.querySelector(".taleboble");
   const bobleBillede = document.getElementById("taleboble-billede");
@@ -14,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const lukketKiste = document.getElementById("lukketkiste");
   const aabenKiste = document.getElementById("abenkiste");
 
-  const cta = document.querySelector(".cta"); // CTA-boblen
+  const cta = document.querySelector(".cta");
 
   /* ------------------------------------------
      Baggrundsmusik
@@ -22,23 +21,48 @@ document.addEventListener("DOMContentLoaded", function () {
   const bgMusic = document.getElementById("bgMusic");
   if (bgMusic) {
     bgMusic.volume = 0.2;
-    bgMusic.play().catch(() => {
-      // autoplay kan blive blokeret, det er ok
-    });
+    bgMusic.play().catch(() => {});
   }
 
   /* ------------------------------------------
-     Funktion: Skift havfruens mund
+     Havfrue mundstyring + tale-animation
   --------------------------------------------- */
-  function havfrueSnak(start) {
-    if (start) {
+  function havfrueSnak(isOpen) {
+    if (!havfrueOpen || !havfrueLukket) return;
+
+    if (isOpen) {
       havfrueLukket.style.display = "none";
-      havfrueAaben.style.display = "block";
+      havfrueOpen.style.display = "block";
     } else {
-      havfrueAaben.style.display = "none";
+      havfrueOpen.style.display = "none";
       havfrueLukket.style.display = "block";
     }
   }
+
+  let talkInterval = null;
+
+  function startTalking() {
+    if (talkInterval) return;
+
+    let open = true;
+    havfrueSnak(true);
+
+    talkInterval = setInterval(() => {
+      open = !open;
+      havfrueSnak(open);
+    }, 150);
+  }
+
+  function stopTalking() {
+    if (talkInterval) {
+      clearInterval(talkInterval);
+      talkInterval = null;
+    }
+    havfrueSnak(false);
+  }
+
+  // Start med lukket mund
+  havfrueSnak(false);
 
   /* ------------------------------------------
      Fiske-array med boble-billeder
@@ -55,7 +79,7 @@ document.addEventListener("DOMContentLoaded", function () {
   ];
 
   /* ------------------------------------------
-     Hent lydfiler
+     Lydfiler
   --------------------------------------------- */
   const soundBlob = new Audio("../sound/blob.wav");
   const kuglefiskLyd = new Audio("../sound/kuglefisk.mp3");
@@ -66,9 +90,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const rensefiskLyd = new Audio("../sound/rensefisk.mp3");
   const starfishLyd = new Audio("../sound/sostjerne.mp3");
   const soundAngel = new Audio("../sound/angels.wav");
-  const ctaLyd = new Audio("../sound/cta.mp3"); // CTA-lyd (ret sti/filnavn hvis nødvendigt)
+  const krabbeLyd = new Audio("../sound/krabbe.mp3");
+  const ctaLyd = new Audio("../sound/cta.mp3");
 
-  // Alle "tale-lyde" (fisk + kiste) – ikke CTA
+  // Alle tale-lyde (fisk + kiste + krabbe) – ikke CTA
   const fiskLyde = [
     kuglefiskLyd,
     klovneFiskLyd,
@@ -78,23 +103,23 @@ document.addEventListener("DOMContentLoaded", function () {
     rensefiskLyd,
     starfishLyd,
     soundAngel,
+    krabbeLyd,
   ];
 
-  // Stop alle fiskelyde
   function stopFiskLyde() {
     fiskLyde.forEach((lyd) => {
       lyd.pause();
       lyd.currentTime = 0;
     });
+    stopTalking();
   }
 
   /* ------------------------------------------
-     Funktion: Spil blob + tale-lyd
+     Funktion: Spil blob + tale-lyd + mund
   --------------------------------------------- */
   function spilLyde(taleLyd) {
     if (!taleLyd) return;
 
-    // Stop andre lyde før vi spiller ny
     stopFiskLyde();
     ctaLyd.pause();
     ctaLyd.currentTime = 0;
@@ -104,12 +129,23 @@ document.addEventListener("DOMContentLoaded", function () {
 
     setTimeout(() => {
       taleLyd.currentTime = 0;
+
+      if (taleLyd !== soundAngel) {
+        startTalking();
+      }
+
       taleLyd.play();
+
+      taleLyd.onended = () => {
+        if (taleLyd !== soundAngel) {
+          stopTalking();
+        }
+      };
     }, 300);
   }
 
   /* ------------------------------------------
-     Klik på fisk/krabbe = vis taleboble
+     Klik på fisk = vis taleboble
   --------------------------------------------- */
   fisk.forEach(function (fiskObjekt) {
     const element = document.getElementsByClassName(fiskObjekt.klasse)[0];
@@ -118,57 +154,56 @@ document.addEventListener("DOMContentLoaded", function () {
       element.addEventListener("click", function (event) {
         event.stopPropagation();
 
-        // Skjul CTA når en fisk vælges
         if (cta) cta.style.display = "none";
 
-        // Stop CTA-lyd hvis den evt. spiller
         ctaLyd.pause();
         ctaLyd.currentTime = 0;
 
-        // Hvis samme boble vises → luk boble og vis CTA
         if (
           boble.style.display === "block" &&
           bobleBillede.src.includes(fiskObjekt.billede)
         ) {
           boble.style.display = "none";
-          havfrueSnak(false);
+          stopTalking();
           if (cta) cta.style.display = "block";
         } else {
-          // Ellers vis boble med nyt billede
           bobleBillede.src = fiskObjekt.billede;
           boble.style.display = "block";
-          havfrueSnak(true);
+          // mundanimation styres af selve lyden, ikke her
         }
       });
     }
   });
 
   /* ------------------------------------------
-     Klik udenfor = luk taleboble + vis CTA + spil CTA-lyd
+     Klik udenfor = luk taleboble + CTA-lyd + mund
   --------------------------------------------- */
   document.addEventListener("click", function (event) {
     if (
       !event.target.closest(".fish") &&
       !event.target.closest(".taleboble") &&
-      !event.target.closest(".krabbe")
+      !event.target.closest(".krabbe") &&
+      !event.target.closest("#lukketkiste") &&
+      !event.target.closest("#abenkiste")
     ) {
       boble.style.display = "none";
-      havfrueSnak(false);
 
-      // Stop alle fiskelyde og spil CTA-lyd
       stopFiskLyde();
-      ctaLyd.currentTime = 0;
-      ctaLyd.play();
 
       if (cta) cta.style.display = "block";
+
+      ctaLyd.currentTime = 0;
+      startTalking();
+      ctaLyd.play();
+
+      ctaLyd.onended = () => {
+        stopTalking();
+      };
     }
   });
 
-  // Start med lukket mund
-  havfrueSnak(false);
-
   /* ------------------------------------------
-     Klik på fisk = spil lyd (via ID)
+     Klik på fisk = spil lyd
   --------------------------------------------- */
   const getKlovnefisk = document.getElementById("klovnefisk");
   const getPaletKirurg = document.getElementById("palet-kirurg");
@@ -193,8 +228,7 @@ document.addEventListener("DOMContentLoaded", function () {
     getRensefisk.addEventListener("click", () => spilLyde(rensefiskLyd));
   if (getStarfish)
     getStarfish.addEventListener("click", () => spilLyde(starfishLyd));
-  // Hvis krabben også får lyd senere:
-  // if (getKrabbe) getKrabbe.addEventListener("click", () => spilLyde(krabbeLyd));
+  if (getKrabbe) getKrabbe.addEventListener("click", () => spilLyde(krabbeLyd));
 
   /* ------------------------------------------
      Kiste toggle + lyd
@@ -204,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
     aabenKiste.style.display = "none";
 
     lukketKiste.addEventListener("click", () => {
-      spilLyde(soundAngel);
+      spilLyde(soundAngel, false);
       lukketKiste.style.display = "none";
       aabenKiste.style.display = "block";
     });
@@ -212,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
     aabenKiste.addEventListener("click", () => {
       aabenKiste.style.display = "none";
       lukketKiste.style.display = "block";
+      stopFiskLyde();
     });
   }
 });

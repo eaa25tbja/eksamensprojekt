@@ -130,7 +130,7 @@ body {
 .cta {
   position: absolute;
   bottom: 47.5vh;
-  left: 12.5vh;
+  left: 11.5vh;
   z-index: 5;
 }
 
@@ -138,7 +138,7 @@ body {
 .taleboble {
   position: absolute;
   bottom: 47vh;
-  left: 12.5vh;
+  left: 11.5vh;
   display: none;
   z-index: 6;
 }
@@ -154,10 +154,20 @@ body {
   position: absolute;
   bottom: 4vw;
   left: 5vw;
-  width: 33vw;
+  width: 18vw;
   z-index: 2;
   transform-origin: 30% 80%;
   animation: tail 1s ease-in-out infinite alternate;
+}
+
+.havfrue1 {
+  display: none;
+}
+
+.havfrue-open,
+.havfrue-lukket {
+  width: 100%;
+  display: none;
 }
 
 @keyframes tail {
@@ -167,19 +177,6 @@ body {
   to {
     rotate: 5deg;
   }
-}
-
-/* fjerner den anden havfrue??*/
-.havfrue1 {
-  display: none;
-}
-
-/* havfrue mundstyring */
-.havfrue-åben {
-  display: none;
-}
-.havfrue-lukket {
-  display: none;
 }
 
 /*-------------------------------------------
