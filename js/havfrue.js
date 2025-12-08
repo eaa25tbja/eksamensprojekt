@@ -2,42 +2,48 @@
 
 document.addEventListener("DOMContentLoaded", function () {
   /* ------------------------------------------
-     Henter DOM-elementer
+     Henter DOM-elementer til havfruen, taleboblen,
+     kisten og CTA-knappen
   --------------------------------------------- */
-  const havfrueOpen = document.querySelector(".havfrue-open");
-  const havfrueLukket = document.querySelector(".havfrue-lukket");
+  const havfrueOpen = document.querySelector(".havfrue-open"); // havfrue med åben mund
+  const havfrueLukket = document.querySelector(".havfrue-lukket"); // havfrue med lukket mund
 
-  const boble = document.querySelector(".taleboble");
-  const bobleBillede = document.getElementById("taleboble-billede");
+  const boble = document.querySelector(".taleboble"); // container for taleboble
+  const bobleBillede = document.getElementById("taleboble-billede"); // selve billedet i taleboblen
 
   const lukketKiste = document.getElementById("lukketkiste");
   const aabenKiste = document.getElementById("abenkiste");
 
-  const cta = document.querySelector(".cta");
+  const cta = document.querySelector(".cta"); // “Tryk rundt i havet”-boblen
 
   /* ------------------------------------------
      Baggrundsmusik
+     - Først forsøger jeg autoplay
+     - Hvis browseren blokerer, starter jeg musikken
+       ved første klik 
   --------------------------------------------- */
-  /* 
-- Forsøger autoplay.
-- Starter musik ved første klik hvis autoplay fejler.
-*/
   const bgMusic = document.getElementById("bgMusic");
   if (bgMusic) {
-    bgMusic.currentTime = 0;
-    bgMusic.volume = 0.2;
-    bgMusic.play().catch(() => {});
+    bgMusic.currentTime = 0; // start altid fra begyndelsen
+    bgMusic.volume = 0.2; // lavere volume, så det ikke er for højt
+    bgMusic.play().catch(() => {
+      // hvis autoplay fejler, gør vi ikke noget her
+    });
   }
 
+  // Fallback: hvis autoplay er blokeret, så start musikken når brugeren klikker første gang
   document.addEventListener("click", function startMusic() {
-    if (bgMusic.paused) {
+    if (bgMusic && bgMusic.paused) {
       bgMusic.play().catch(() => {});
     }
+    // Fjern listeneren igen så den kun kører én gang
     document.removeEventListener("click", startMusic);
   });
 
   /* ------------------------------------------
      Havfrue mundstyring + tale-animation
+     - havfrueSnak() styrer hvilken mund der vises
+     - startTalking()/stopTalking() - fake animation
   --------------------------------------------- */
   function havfrueSnak(isOpen) {
     if (!havfrueOpen || !havfrueLukket) return;
@@ -51,14 +57,16 @@ document.addEventListener("DOMContentLoaded", function () {
     }
   }
 
-  let talkInterval = null;
+  let talkInterval = null; // bruges til at gemme setInterval-id
 
   function startTalking() {
+    // hvis hun allerede “snakker”, så start ikke en ny interval
     if (talkInterval) return;
 
     let open = true;
-    havfrueSnak(true);
+    havfrueSnak(true); // start med åben mund
 
+    // Skifter mellem åben/lukket mund hvert 150 ms
     talkInterval = setInterval(() => {
       open = !open;
       havfrueSnak(open);
@@ -66,18 +74,20 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function stopTalking() {
+    // stopper mund-animationen
     if (talkInterval) {
       clearInterval(talkInterval);
       talkInterval = null;
     }
-    havfrueSnak(false);
+    havfrueSnak(false); // slut med lukket mund
   }
 
-  // Start med lukket mund
+  // Start med lukket mund når siden loader
   havfrueSnak(false);
 
   /* ------------------------------------------
-     Fiske-array med boble-billeder
+     Fiske-array med info om hvilken taleboble
+     der hører til hvilken fisk/krabbe
   --------------------------------------------- */
   const fisk = [
     { klasse: "starfish", billede: "../img/talebobler/sostjerne-boble.png" },
@@ -92,6 +102,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ------------------------------------------
      Lydfiler
+     - én lyd per fisk + CTA + blob “plop”-lyd
+     - soundAngel bruges til kisten
   --------------------------------------------- */
   const soundBlob = new Audio("../sound/blob.wav");
   const kuglefiskLyd = new Audio("../sound/kuglefisk.mp3");
@@ -105,7 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const krabbeLyd = new Audio("../sound/krabbe.mp3");
   const ctaLyd = new Audio("../sound/cta.mp3");
 
-  // Alle tale-lyde (fisk + kiste + krabbe) – ikke CTA
+  // Samler alle “tale-lyde” i et array, så jeg nemt kan stoppe dem alle
   const fiskLyde = [
     kuglefiskLyd,
     klovneFiskLyd,
@@ -118,6 +130,7 @@ document.addEventListener("DOMContentLoaded", function () {
     krabbeLyd,
   ];
 
+  // Stopper alle fiskelyde + stopper mund-animation
   function stopFiskLyde() {
     fiskLyde.forEach((lyd) => {
       lyd.pause();
@@ -127,50 +140,62 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   /* ------------------------------------------
-     Funktion: Spil blob + tale-lyd + mund
+     Spil blob + tale-lyd + mund
+     - spiller først en lille "blob"-lyd
+     - derefter selve tale-lyden
+     - hvis det ikke er engle-lyden, starter mund-animation
   --------------------------------------------- */
   function spilLyde(taleLyd) {
     if (!taleLyd) return;
 
+    // Stop andre lyde før ny lyd
     stopFiskLyde();
     ctaLyd.pause();
     ctaLyd.currentTime = 0;
 
+    // Lille “blob” før talelyd
     soundBlob.currentTime = 0;
     soundBlob.play();
 
     setTimeout(() => {
       taleLyd.currentTime = 0;
 
+      // englelyden (soundAngel) skal ikke give mund-animation
       if (taleLyd !== soundAngel) {
         startTalking();
       }
 
       taleLyd.play();
 
+      // når lyden er færdig, stopper vi mund-animation (med mindre det var englelyden)
       taleLyd.onended = () => {
         if (taleLyd !== soundAngel) {
           stopTalking();
         }
       };
-    }, 300);
+    }, 300); // lille delay så blob-lyden når at spille først
   }
 
   /* ------------------------------------------
      Klik på fisk = vis taleboble
+     - klik på en fisk → viser taleboblen med
+       det billede der passer til fisken
+     - klik igen på samme → lukker boblen
   --------------------------------------------- */
   fisk.forEach(function (fiskObjekt) {
     const element = document.getElementsByClassName(fiskObjekt.klasse)[0];
 
     if (element) {
       element.addEventListener("click", function (event) {
-        event.stopPropagation();
+        event.stopPropagation(); // så klikket ikke tæller som “klik udenfor”
 
-        if (cta) cta.style.display = "none";
+        if (cta) cta.style.display = "none"; // gem CTA når barn vælger fisk
 
+        // stop CTA-lyd hvis den spiller
         ctaLyd.pause();
         ctaLyd.currentTime = 0;
 
+        // hvis boblen allerede viser samme billede → luk den
         if (
           boble.style.display === "block" &&
           bobleBillede.src.includes(fiskObjekt.billede)
@@ -179,16 +204,21 @@ document.addEventListener("DOMContentLoaded", function () {
           stopTalking();
           if (cta) cta.style.display = "block";
         } else {
+          // ellers vis boblen med ny fisk-tekst
           bobleBillede.src = fiskObjekt.billede;
           boble.style.display = "block";
-          // mundanimation styres af selve lyden, ikke her
+          // mundanimationen styres af lyden, ikke her
         }
       });
     }
   });
 
   /* ------------------------------------------
-     Klik udenfor = luk taleboble + CTA-lyd + mund
+     Klik udenfor fiskeområder:
+     - luk taleboble
+     - stop fiskelyde
+     - vis CTA igen
+     - spil CTA-lyd med mundanimation
   --------------------------------------------- */
   document.addEventListener("click", function (event) {
     if (
@@ -200,10 +230,12 @@ document.addEventListener("DOMContentLoaded", function () {
     ) {
       boble.style.display = "none";
 
+      // stop alt der "snakker"
       stopFiskLyde();
 
       if (cta) cta.style.display = "block";
 
+      // havfruen siger CTA-teksten
       ctaLyd.currentTime = 0;
       startTalking();
       ctaLyd.play();
@@ -215,7 +247,8 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   /* ------------------------------------------
-     Klik på fisk = spil lyd
+     Klik på fisk = spil lyd (kobler HTML-id'er
+     til de rigtige lydfiler via spilLyde)
   --------------------------------------------- */
   const getKlovnefisk = document.getElementById("klovnefisk");
   const getPaletKirurg = document.getElementById("palet-kirurg");
@@ -244,21 +277,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
   /* ------------------------------------------
      Kiste toggle + lyd
+     - klik på lukket kiste → åben kiste + engle-lyd
+     - klik på åben kiste → luk kiste + stop lyde
+     - englelyden bruger stadig spilLyde(), men munden
+       animerer ikke pga. check i spilLyde()
   --------------------------------------------- */
   if (lukketKiste && aabenKiste) {
     lukketKiste.style.display = "block";
     aabenKiste.style.display = "none";
 
+    // Når kisten åbnes
     lukketKiste.addEventListener("click", () => {
-      spilLyde(soundAngel, false);
+      spilLyde(soundAngel); // mund animerer ikke, pga. special-case i spilLyde()
       lukketKiste.style.display = "none";
       aabenKiste.style.display = "block";
     });
 
+    // Når kisten lukkes igen
     aabenKiste.addEventListener("click", () => {
       aabenKiste.style.display = "none";
       lukketKiste.style.display = "block";
-      stopFiskLyde();
+      stopFiskLyde(); // stop evt. englelyd eller andre lyde
     });
   }
 });
+
+hej;
