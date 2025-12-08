@@ -96,7 +96,7 @@ a
         - Ny .krabbe-inner:
             - animation: krabbe-rotate
 
-///////////////////spil.css//////////////////////
+    ///////////////////spil.css//////////////////////
 
     Struktur & setup
 
