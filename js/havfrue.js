@@ -301,5 +301,3 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
-
-hej;
