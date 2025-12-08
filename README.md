@@ -1,6 +1,7 @@
-a
 --------------------- HTML --------------------------
-/////////////////index.html////////////////////// - ny index-fil, som åbner havfrue.html automatisk
+/////////////////index.html//////////////////////
+
+    - ny index-fil, som åbner havfrue.html automatisk
 
     /////////////////havfrue.html//////////////////////
     Struktur & head
