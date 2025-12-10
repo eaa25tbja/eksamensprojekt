@@ -1,11 +1,18 @@
+/* 
+  Styles til havfrue-siden:
+  - Animeret undervandsbaggrund
+  - Havfrue med talebobler
+  - Svømmende fisk + krabbe
+  - Kiste med lyd
+*/
+
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap");
 
 :root {
-  /* Billede størrelser (px) */
-  --sun-size: 100px;
+  /* Fælles bredde til de fleste fisk (gjort lidt mindre: 160px i stedet for 200px) */
   --fish-w: 160px;
 
-  /* Start /exit offset (px) */
+  /* Hvor langt fiskene starter udenfor skærmen (bruges til deres animationsberegning) */
   --off-fish1: 200px;
   --off-fish2: 200px;
   --off-fish3: 200px;
@@ -16,6 +23,7 @@
 
 /* ---------------------------------------------------------
    Global reset
+   - Fjerner default margins/padding og sikrer box-sizing
 --------------------------------------------------------- */
 * {
   margin: 0;
@@ -32,19 +40,21 @@ body {
 
 /* ---------------------------------------------------------
   Baggrund 
+  - .scene er “canvas’et”
+  - .bg1 og .bg2 er to baggrundsbilleder der fader ind/ud
 --------------------------------------------------------- */
 .scene {
   position: relative;
   width: 100%;
   min-height: 100vh;
-  overflow: hidden;
+  overflow: hidden; /* gemmer alt der svømmer udenfor */
 }
 
 .bg {
   position: absolute;
   inset: 0;
-  background-size: cover;
-  background-position: bottom center;
+  background-size: cover; /* fylder hele skærmen */
+  background-position: bottom center; /* så bunden altid er synlig */
   background-repeat: no-repeat;
 }
 
@@ -55,7 +65,7 @@ body {
 .bg2 {
   background-image: url("../img/baggrund/baggrund2-havfrue.png");
   opacity: 0;
-  animation: fadeBg 2s infinite ease-in-out;
+  animation: fadeBg 2s infinite ease-in-out; /* giver en blid “glow”-effekt */
 }
 
 @keyframes fadeBg {
@@ -72,18 +82,21 @@ body {
 
 /* ---------------------------------------------------------
   Kiste
+  - Kisten hopper lidt for at tiltrække opmærksomhed
+  - Jeg bruger to billeder: lukket/åben
 --------------------------------------------------------- */
 
-/* kiste lukket*/
+/* kiste lukket */
 .kiste1 {
   position: absolute;
-  bottom: 33vw;
+  bottom: 33vw; /* placeret højt oppe ift. bredden */
   right: 0.5vw;
-  width: 240px;
+  width: 240px; /* gjort 20% mindre end før (300px → 240px) */
   z-index: 1;
   animation: kiste-anim 2.5s ease-in-out infinite;
   transform-origin: bottom center;
 }
+
 @keyframes kiste-anim {
   0% {
     transform: translateY(0);
@@ -108,23 +121,26 @@ body {
   bottom: 33vw;
   right: 0.5vw;
   width: 240px;
-  z-index: 3;
+  z-index: 3; /* lidt over andet, så åbnet kiste er foran */
 }
 
+/* Fælles styling for kiste-billeder */
 .kiste1,
 .kiste2 {
-  width: 240px;
-  cursor: pointer;
+  width: 240px; /* samme bredde på begge states */
+  cursor: pointer; /* tydeligt at den kan trykkes på */
   transition: opacity 0.3s ease;
 }
 
-/* Start med kun at vise den lukkede kiste */
+/* Start med kun at vise den lukkede kiste (styres videre i JS) */
 #abenkiste {
   display: none;
 }
 
 /* ---------------------------------------------------------
   Talebobler
+  - CTA og talebobler placeres samme sted
+  - Talebobler skjules som default, CTA vises fra start
 --------------------------------------------------------- */
 
 .cta {
@@ -132,40 +148,44 @@ body {
   bottom: 47.5vh;
   left: 10.5vh;
   z-index: 3;
-  width: 35vh;
+  width: 35vh; /* styrer størrelsen på CTA-billedet */
 }
 
-/* talebobler skjult */
+/* talebobler skjult som udgangspunkt */
 .taleboble {
   position: absolute;
   bottom: 47vh;
   left: 10.5vh;
-  display: none;
+  display: none; /* vises kun når barnet trykker på en fisk */
   z-index: 3;
 }
 
 .taleboble img {
   z-index: 6;
-  width: 35vh;
+  width: 35vh; /* samme størrelse som CTA for konsistent look */
 }
 
 /* ---------------------------------------------------------
   Havfrue
+  - Havfruen står i venstre side og vugger med halen
+  - Mund-billederne styres via JS (åben/lukket)
 --------------------------------------------------------- */
 .havfrue {
   position: absolute;
   bottom: 4vw;
   left: 5vw;
-  width: 18vw;
+  width: 18vw; /* skalerer med viewport-bredden */
   z-index: 2;
-  transform-origin: 30% 80%;
+  transform-origin: 30% 80%; /* så halen vugger naturligt */
   animation: tail 1s ease-in-out infinite alternate;
 }
 
+/* basis-billedet bruges ikke direkte, men beholdes hvis man vil ændre senere */
 .havfrue1 {
   display: none;
 }
 
+/* Mund-billeder – JS toggler display: block/none afhængigt af tale */
 .havfrue-open,
 .havfrue-lukket {
   width: 100%;
@@ -183,6 +203,8 @@ body {
 
 /*-------------------------------------------
   Alle fisk
+  - Alle fisk er absolut positionerede
+  - De fleste bruger var(--fish-w) for fælles størrelse
 -------------------------------------------*/
 
 /*   søstjerne  */
@@ -219,13 +241,14 @@ body {
 .fish1 {
   position: absolute;
   bottom: 50.8vh;
-  width: var(--fish-w);
+  width: var(--fish-w); /* fælles bredde → nemt at justere alle fisk */
   max-width: 28vw;
   z-index: 4;
-  left: calc(-1 * var(--off-fish1));
+  left: calc(-1 * var(--off-fish1)); /* starter udenfor skærmen til venstre */
   animation: fish1 18s linear infinite;
   cursor: pointer;
 }
+
 @keyframes fish1 {
   0% {
     transform: translateX(0);
@@ -242,14 +265,15 @@ body {
   bottom: 14.5vh;
   width: var(--fish-w);
   max-width: 28vw;
-  right: calc(-1 * var(--off-fish2));
+  right: calc(-1 * var(--off-fish2)); /* starter udenfor til højre */
   z-index: 3;
   animation: fish2 12s linear infinite;
   cursor: pointer;
 }
+
 @keyframes fish2 {
   0% {
-    transform: translateX(0) rotateY(180deg); /* rotateY flipper billdet vandret */
+    transform: translateX(0) rotateY(180deg); /* flipper billedet så det svømmer modsatte vej */
   }
   90%,
   100% {
@@ -257,7 +281,7 @@ body {
   }
 }
 
-/* fish3 Kuglefisk*/
+/* fish3 Kuglefisk – har både svømme- og "blow up"-animation */
 .fish3 {
   position: absolute;
   bottom: 63.5vh;
@@ -267,11 +291,11 @@ body {
   right: calc(-1 * var(--off-fish3));
   cursor: pointer;
 
-  /* Kun svømmeanimation her */
+  /* Svømmeanimation */
   animation: fish3Move 20.1s linear infinite;
 }
 
-/* Indre: selve fisken, der skifter mellem to billeder */
+/* Indre: selve fisken, der skifter mellem to billeder via steps-animation */
 .fish3-inner {
   width: 100%;
   height: 100%;
@@ -280,7 +304,7 @@ body {
   animation: blob 2s steps(2) infinite;
 }
 
-/* Svømning fra side til side */
+/* Svømmer på tværs */
 @keyframes fish3Move {
   0% {
     transform: translateX(0) rotateY(180deg);
@@ -290,6 +314,8 @@ body {
     transform: translateX(calc(-100vw - var(--off-fish3))) rotateY(180deg);
   }
 }
+
+/* Skifter mellem lille/stor kuglefisk */
 @keyframes blob {
   0%,
   49% {
@@ -301,7 +327,7 @@ body {
   }
 }
 
-/* fish4 gul kirurg */
+/* fish4 gul kirurg – øverst i vandet */
 .fish4 {
   position: absolute;
   bottom: 70vh;
@@ -312,6 +338,7 @@ body {
   animation: fish4 16s linear infinite;
   cursor: pointer;
 }
+
 @keyframes fish4 {
   0% {
     transform: translateX(0);
@@ -332,6 +359,7 @@ body {
   animation: fish5 9s linear infinite;
   cursor: pointer;
 }
+
 @keyframes fish5 {
   0% {
     transform: translateX(0);
@@ -341,20 +369,21 @@ body {
   }
 }
 
-/* fish6 rensefisk */
+/* fish6 rensefisk – lidt bredere end de andre, derfor 180px */
 .fish6 {
   position: absolute;
   bottom: 40.5vh;
-  width: 180px;
+  width: 180px; /* specifik bredde i stedet for var(--fish-w) */
   max-width: 28vw;
   right: calc(-1 * var(--off-fish6));
-  z-index: 1; /* lag af bilerne */
+  z-index: 1; /* svømmer bag nogle af de andre */
   animation: fish6 10s linear infinite;
   cursor: pointer;
 }
+
 @keyframes fish6 {
   0% {
-    transform: translateX(0) rotateY(180deg); /* har fjernet rotaeY så den nu er flippet vandrettet */
+    transform: translateX(0) rotateY(180deg);
   }
   90%,
   100% {
@@ -362,25 +391,10 @@ body {
   }
 }
 
-@keyframes swim-warp {
-  0% {
-    transform: translateX(0) skewX(0deg) scaleX(1);
-  }
-  25% {
-    transform: translateX(1px) skewX(2deg) scaleX(1.03);
-  }
-  50% {
-    transform: translateX(0) skewX(0deg) scaleX(1);
-  }
-  75% {
-    transform: translateX(-1px) skewX(-2deg) scaleX(1.03);
-  }
-  100% {
-    transform: translateX(0) skewX(0deg) scaleX(1);
-  }
-}
-
-/*krabbe*/
+/* ---------------------------------------------------------
+  Krabbe
+  - Laver en lille sidelengs dans + vippe-animation
+--------------------------------------------------------- */
 
 .krabbe {
   position: absolute;
@@ -437,9 +451,9 @@ body {
 
 /* ---------------------------------------------------------
   Knap til at skifte side
+  - Rund knap nederst til højre der linker til spillet
 --------------------------------------------------------- */
 
-/* Spilleside-knap */
 .gameBtn {
   position: absolute;
   bottom: 2vw;
@@ -452,5 +466,5 @@ body {
 
 .gameBtn img {
   width: 100%;
-  border-radius: 50%;
+  border-radius: 50%; /* cirkelknap, tydelig som call-to-action */
 }
